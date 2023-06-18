@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/interfaces/IERC20.sol";
 
 contract Pluribus {
     mapping(address => uint256) public balances; // Balances of each user
 
-    ERC20[] public stablecoins; // List of stablecoins
+    IERC20[] public stablecoins; // List of stablecoins
     uint256 public totalCollateral; // Total value of collateral
 
     // Event triggered when a user deposits collateral
@@ -22,7 +22,7 @@ contract Pluribus {
     // Event triggered when a user redeems stablecoins
     event StablecoinsRedeemed(address indexed user, uint256 amount);
 
-    constructor(ERC20[] memory _stablecoins) {
+    constructor(IERC20[] memory _stablecoins) {
         stablecoins = _stablecoins;
     }
 
