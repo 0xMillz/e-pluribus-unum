@@ -4,43 +4,69 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
 
+/* 
+ * Pluribus (UNUM) is an ERC20-compatible meta-stablecoin, collateralized by a basket of other popular USD stablecoins.
+ * It allows the contract owner to dynamically update the allow-list of stablecoins that can be deposited as collateral.
+ * Users can deposit collateral, mint UNUM, redeem UNUM, and withdraw their collateral. 
+ * The contract keeps track of balances and allowances using mappings.
+ */
 contract Pluribus {
-    mapping(address => uint256) public balances; // Balances of each user
+    string public name;
+    string public symbol;
+    uint8 public decimals;
+    uint256 public totalSupply;
 
-    IERC20[] public stablecoins; // List of stablecoins
-    uint256 public totalCollateral; // Total value of collateral
+    mapping(address => uint256) public balances;
+    mapping(address => mapping(address => uint256)) public allowances;
 
-    // Event triggered when a user deposits collateral
-    event CollateralDeposited(address indexed user, uint256 amount);
+    ERC20[] public stablecoins;
+    mapping(address => bool) public isWhitelisted;
 
-    // Event triggered when a user withdraws collateral
-    event CollateralWithdrawn(address indexed user, uint256 amount);
+    address public owner;
 
-    // Event triggered when a user mints stablecoins
-    event StablecoinsMinted(address indexed user, uint256 amount);
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+    event WhitelistUpdated(address indexed stablecoin, bool isWhitelisted);
 
-    // Event triggered when a user redeems stablecoins
-    event StablecoinsRedeemed(address indexed user, uint256 amount);
-
-    constructor(IERC20[] memory _stablecoins) {
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        uint8 _decimals,
+        ERC20[] memory _stablecoins
+    ) {
+        name = _name;
+        symbol = _symbol;
+        decimals = _decimals;
         stablecoins = _stablecoins;
+        owner = msg.sender;
     }
 
-    // Deposits collateral by transferring stablecoins to the contract
-    function depositCollateral(uint256[] memory amounts) external {
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only the contract owner can call this function");
+        _;
+    }
+
+    function updateWhitelist(address stablecoin, bool isWhitelisted) external onlyOwner {
+        require(isWhitelisted != isWhitelisted[stablecoin], "Whitelist status is already set to the given value");
+        isWhitelisted[stablecoin] = isWhitelisted;
+        emit WhitelistUpdated(stablecoin, isWhitelisted);
+    }
+
+    function depositCollateral(uint256[] calldata amounts) external {
         require(amounts.length == stablecoins.length, "Invalid number of amounts");
 
         for (uint256 i = 0; i < stablecoins.length; i++) {
+            require(isWhitelisted[address(stablecoins[i])], "Stablecoin is not whitelisted");
+
             stablecoins[i].transferFrom(msg.sender, address(this), amounts[i]);
             balances[msg.sender] += amounts[i];
-            totalCollateral += amounts[i];
+            totalSupply += amounts[i];
         }
 
-        emit CollateralDeposited(msg.sender, totalCollateral);
+        emit Transfer(address(0), msg.sender, totalSupply);
     }
 
-    // Withdraws collateral by transferring stablecoins from the contract to the user
-    function withdrawCollateral(uint256[] memory amounts) external {
+    function withdrawCollateral(uint256[] calldata amounts) external {
         require(amounts.length == stablecoins.length, "Invalid number of amounts");
 
         for (uint256 i = 0; i < stablecoins.length; i++) {
@@ -48,53 +74,85 @@ contract Pluribus {
 
             stablecoins[i].transfer(msg.sender, amounts[i]);
             balances[msg.sender] -= amounts[i];
-            totalCollateral -= amounts[i];
+            totalSupply -= amounts[i];
         }
 
-        emit CollateralWithdrawn(msg.sender, totalCollateral);
+        emit Transfer(msg.sender, address(0), totalSupply);
     }
 
-    // Mints stablecoins by transferring an equivalent amount of collateral to the contract
     function mintStablecoins(uint256 amount) external {
-        uint256 basketValue = calculateBasketValue();
-        require(amount <= basketValue, "Insufficient collateral value");
+        require(amount <= totalSupply, "Insufficient collateral value");
 
         uint256[] memory amounts = new uint256[](stablecoins.length);
 
         for (uint256 i = 0; i < stablecoins.length; i++) {
-            amounts[i] = (amount * balances[msg.sender]) / basketValue;
+            amounts[i] = (amount * balances[msg.sender]) / totalSupply;
             require(amounts[i] <= balances[msg.sender], "Insufficient collateral balance");
 
             balances[msg.sender] -= amounts[i];
             stablecoins[i].transfer(msg.sender, amounts[i]);
         }
 
-        emit StablecoinsMinted(msg.sender, amount);
+        totalSupply -= amount;
+        balances[msg.sender] += amount;
+
+        emit Transfer(address(0), msg.sender, amount);
     }
 
-    // Redeems stablecoins by transferring an equivalent amount of collateral from the user to the contract
     function redeemStablecoins(uint256 amount) external {
         uint256[] memory amounts = new uint256[](stablecoins.length);
 
         for (uint256 i = 0; i < stablecoins.length; i++) {
-            amounts[i] = (amount * balances[msg.sender]) / totalCollateral;
-            require(amounts[i] <= balances[msg.sender], "Insufficient collateral balance");
+            amounts[i] = (amount * balances[msg.sender]) / totalSupply;
+            require(amounts[i] <= balances[msg.sender], "Insufficient stablecoin balance");
 
             balances[msg.sender] -= amounts[i];
             stablecoins[i].transferFrom(msg.sender, address(this), amounts[i]);
         }
 
-        emit StablecoinsRedeemed(msg.sender, amount);
+        totalSupply += amount;
+        balances[msg.sender] += amount;
+
+        emit Transfer(msg.sender, address(0), amount);
     }
 
-    // Calculates the total value of collateral in the basket
-    function calculateBasketValue() public view returns (uint256) {
-        uint256 basketValue = 0;
+    function balanceOf(address account) external view returns (uint256) {
+        return balances[account];
+    }
 
-        for (uint256 i = 0; i < stablecoins.length; i++) {
-            basketValue += stablecoins[i].balanceOf(address(this));
-        }
+    function allowance(address owner, address spender) external view returns (uint256) {
+        return allowances[owner][spender];
+    }
 
-        return basketValue;
+    function approve(address spender, uint256 amount) external returns (bool) {
+        allowances[msg.sender][spender] = amount;
+        emit Approval(msg.sender, spender, amount);
+        return true;
+    }
+
+    function transfer(address recipient, uint256 amount) external returns (bool) {
+        _transfer(msg.sender, recipient, amount);
+        return true;
+    }
+
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool) {
+        require(
+            amount <= allowances[sender][msg.sender],
+            "Transfer amount exceeds allowance"
+        );
+        allowances[sender][msg.sender] -= amount;
+        _transfer(sender, recipient, amount);
+        return true;
+    }
+
+    function _transfer(address from, address to, uint256 amount) internal {
+        require(from != address(0), "Transfer from the zero address");
+        require(to != address(0), "Transfer to the zero address");
+        require(amount <= balances[from], "Transfer amount exceeds balance");
+
+        balances[from] -= amount;
+        balances[to] += amount;
+
+        emit Transfer(from, to, amount);
     }
 }
