@@ -2,6 +2,10 @@
   "name": "e-pluribus-unum",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "npm": "please-use-yarn",
+    "yarn": ">= 1.19.1"
+  },
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test ./test/unit/*.spec.ts --network hardhat",

@@ -1,32 +1,31 @@
 // contracts/PluribusVault-v0.1.0.sol
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.7;
 
-import "@openzeppelin/contracts/interfaces/IERC20.sol";
-
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 /* 
  * Pluribus (UNUM) is an ERC20-compatible meta-stablecoin, collateralized by a basket of other popular USD stablecoins.
  * It allows the contract owner to dynamically update the allow-list of stablecoins that can be deposited as collateral.
  * Users can deposit collateral, mint UNUM, redeem UNUM, and withdraw their collateral. 
  * The contract keeps track of balances and allowances using mappings.
  */
-contract Pluribus {
-    string public name;
-    string public symbol;
-    uint8 public decimals;
-    uint256 public totalSupply;
+contract Pluribus is ERC20 {
+    // string public name; // Pluribus
+    // string public symbol; // UNUM
+    // uint8 public decimals; // 18
+    // uint256 public totalSupply; // infinity?
 
     mapping(address => uint256) public balances;
     mapping(address => mapping(address => uint256)) public allowances;
 
     ERC20[] public stablecoins;
-    mapping(address => bool) public isWhitelisted;
+    mapping(address => bool) public collateral;
 
     address public owner;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
-    event WhitelistUpdated(address indexed stablecoin, bool isWhitelisted);
+    event SupportedCollateralUpdated(address indexed stablecoin, bool isSupportedCollateral);
 
     constructor(
         string memory _name,
@@ -46,17 +45,17 @@ contract Pluribus {
         _;
     }
 
-    function updateWhitelist(address stablecoin, bool isWhitelisted) external onlyOwner {
-        require(isWhitelisted != isWhitelisted[stablecoin], "Whitelist status is already set to the given value");
-        isWhitelisted[stablecoin] = isWhitelisted;
-        emit WhitelistUpdated(stablecoin, isWhitelisted);
+    function updateSupportedCollateral(address stablecoin, bool isSupportedCollateral) external onlyOwner {
+        require(isSupportedCollateral != collateral[stablecoin], "Collateral status already set");
+        collateral[stablecoin] = isSupportedCollateral;
+        emit SupportedCollateralUpdated(stablecoin, isSupportedCollateral);
     }
 
     function depositCollateral(uint256[] calldata amounts) external {
         require(amounts.length == stablecoins.length, "Invalid number of amounts");
 
         for (uint256 i = 0; i < stablecoins.length; i++) {
-            require(isWhitelisted[address(stablecoins[i])], "Stablecoin is not whitelisted");
+            require(collateral[address(stablecoins[i])], "Coin is not supported");
 
             stablecoins[i].transferFrom(msg.sender, address(this), amounts[i]);
             balances[msg.sender] += amounts[i];
