@@ -1,20 +1,14 @@
-// contracts/PluribusVault-v0.1.0.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 /* 
- * Pluribus (UNUM) is an ERC20-compatible meta-stablecoin, collateralized by a basket of other popular USD stablecoins.
- * It allows the contract owner to dynamically update the allow-list of stablecoins that can be deposited as collateral.
- * Users can deposit collateral, mint UNUM, redeem UNUM, and withdraw their collateral. 
- * The contract keeps track of balances and allowances using mappings.
- */
-contract Pluribus is ERC20 {
-    // string public name; // Pluribus
-    // string public symbol; // UNUM
-    // uint8 public decimals; // 18
-    // uint256 public totalSupply; // infinity?
-
+ * Pluribus (UNUM) is an ERC20-compatible meta-stablecoin, collateralized by small basket of 4 other top USD stablecoins.
+ * Users can deposit their stablecoins as collateral, mint UNUM, redeem UNUM, and withdraw their collateral by depositing 
+ * the corresponding value of UNUM back into the contract to be burned.
+*/
+abstract contract Pluribus is ERC20 {
     mapping(address => uint256) public balances;
     mapping(address => mapping(address => uint256)) public allowances;
 
@@ -153,5 +147,53 @@ contract Pluribus is ERC20 {
         balances[to] += amount;
 
         emit Transfer(from, to, amount);
+    }
+}
+
+contract PriceOracle {
+    // Chainlink Aggregator addresses for the tokens
+    address public usdtUsdFeed;
+    address public daiUsdFeed;
+    address public usdcUsdFeed;
+    address public fraxUsdFeed;
+
+    constructor(
+        address _usdtUsdFeed,
+        address _daiUsdFeed,
+        address _usdcUsdFeed,
+        address _fraxUsdFeed
+    ) {
+        usdtUsdFeed = _usdtUsdFeed;
+        daiUsdFeed = _daiUsdFeed;
+        usdcUsdFeed = _usdcUsdFeed;
+        fraxUsdFeed = _fraxUsdFeed;
+    }
+
+    function requestPrice(address token) external view returns (uint256) {
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(getPriceFeed(token));
+        (, int256 price, , , ) = priceFeed.latestRoundData();
+        require(price > 0, "Price not available");
+        // Chainlink feeds return the price with 8 decimals, so divide by 1e8
+        uint256 decimals = uint256(priceFeed.decimals());
+        return uint256(price) / (10**decimals);
+    }
+
+    function getPriceFeed(address token) private view returns (address) {
+        // TODO: verify price feed addresseses
+        if (token == address(0x55d398326f99059fF775485246999027B3197955)) {
+            // USDT/USD
+            return usdtUsdFeed;
+        } else if (token == address(0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063)) {
+            // DAI/USD
+            return daiUsdFeed;
+        } else if (token == address(0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)) {
+            // USDC/USD
+            return usdcUsdFeed;
+        } else if (token == address(0x853d955aCEf822Db058eb8505911ED77F175b99e)) {
+            // FRAX/USD
+            return fraxUsdFeed;
+        } else {
+            revert("Invalid token");
+        }
     }
 }
