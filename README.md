@@ -15,13 +15,14 @@
  * UNUM does not care about it's price on other markets. It only cares about its immutable value declared in the Solidity contract. If you don't like the contract, don't sign (a tx with) it!
  * Instead of placing all your eggs in one stablish-basket, diversify your risk across a several different baskets of stablecoins, ones which can always be reedemed for the current marketvalue in proportion to the collateral you deposited.
 
-   “Diversification is protection against ignorance, but if you don’t feel ignorant, the need for it goes down drastically.”
-    - Warren Buffett
-   "Probably rat poison squared."
-    - Also, Warren Buffett
+“Diversification is protection against ignorance, but if you don’t feel ignorant, the need for it goes down drastically.”  
+ -Warren Buffett
+   
+"Probably rat poison squared."    
+ -Also Warren Buffett
   
 ## TODO:
-This project intends to act as a non-profit, but in order to pay the oracle fees, Pluribus will earn need to consistently earn revenue to keep a stable treasury balance of LINK tokens (Chainlink's fee token). Secondly, Pluribus would ideally want to be able to build up a sizeable bailout fund over time if UNUM starts to gain adoption. This bailout (SAFU) fund is to only be used in worst case scenerarios when it becomes is more than clear that a formally supported collateralized stable coin has failed and is going to near zero, forever. So, as mentioned above, if your collateralized coin is worth a little less than $1.00 and you withdraw, you will get exactly back the current market value of your original collateral. And on the flip side, if your stablecoin collateral happens to have a market value greater than 1 USD in value, you will only be able withdraw your collateral at a 1:1 exchange rate with UNUM. Hopefully this small inconvience -- taking a ~0.5% haircut the few times you decide to withdraw your collateral when you happen to be either a little up or a little down, will make up for it in SPADES when the worst happens, your collateral completely loses all its value and Pluribus steps in with the goal of making every depositer of that collateral completely whole again. Ideally as the bailout fund grows overtime, it will eventually hold more in value than any single coin does in it's own collateral.
+This project intends to act as a non-profit, but in order to pay the oracle fees, Pluribus will earn need to consistently earn revenue to keep a stable treasury balance of LINK tokens (Chainlink's fee token). Secondly, Pluribus would ideally want to be able to build up a sizeable bailout fund over time if UNUM starts to gain adoption. This bailout (SAFU) fund is to only be used in worst case scenerarios when it becomes more than clear that a formally supported collateralized stable coin has failed and is going to near zero, forever. So, as mentioned above, if your collateralized coin is worth a little less than $1.00 and you withdraw, you will get exactly back the current market value of your original collateral. And on the flip side, if your stablecoin collateral happens to have a market value greater than 1 USD in value, you will only be able withdraw your collateral at a 1:1 exchange rate with UNUM. Hopefully this small inconvience -- taking a ~0.5% haircut the few times you decide to withdraw your collateral when you happen to be either a little up or a little down, will make up for it in SPADES when the worst happens, your collateral completely loses all its value and Pluribus steps in with the goal of making every depositer of that collateral completely whole again. Ideally as the bailout fund grows overtime, it will eventually hold more in value than any single coin does in it's own collateral.
 
 <b>If anyone who reads this wants to get in contact, either to contribute or just talk tokenomics, feel free to message me or open an issue on this repo. Thanks!</b>
 
