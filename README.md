@@ -16,7 +16,7 @@
  * Instead of placing all your eggs in one stablish-basket, spread your risk across a basket of stablecoins, one that can always be reedemed for it's current and the collateral you deposited.
  */
 
-## Plurisbus is Bootstrapped from the [Chainlink Hardhat Starter Kit](https://github.com/smartcontractkit/hardhat-starter-kit)
+## Pluribus is Bootstrapped from the [Chainlink Hardhat Starter Kit](https://github.com/smartcontractkit/hardhat-starter-kit)
 
 
 - [Chainlink Hardhat Starter Kit](#chainlink-hardhat-starter-kit)
