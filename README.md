@@ -6,15 +6,19 @@
 ## WTF is Pluribus (UNUM)?
  Short answer, nothing yet. Somewhere between ideation and a POC. 
  * Pluribus (UNUM) intends to be an erc20-compatible stablecoin, collateralized by a basket of several other well-known stablecoins. You could call it a "meta-stablecoin."
- * While a single stablecoin may completely fail for any number of reasons, the combination of several well-chosen, popular, liquid, and time-tested stablecoins combined into a single basket of collateral should be more resilient to any single failure.
- * "E pluribus unum" is a Latin phrase meaning, "out of many, one," and can be found printed on every single U.S. dollar bill. Here, the "many" are the stablecoins held as collateral in this contract; UNUM the "one".
- * While the Roman Empire used gold coins as their preffered form of sound money, we are basically mocking them in their own tongue on our dirty fiat.
-
+ * While a single stablecoin may completely fail for any number of reasons, the combination of several well-chosen, popular, liquid, and time-tested stablecoins combined into a single pool of collateral should be more resilient to any single failure.
+ * "E pluribus unum" is a Latin phrase meaning, "out of many, one," and can be found printed on every single U.S. dollar bill and coin. Here, the "many" are the stablecoins held as collateral in this contract; UNUM the "one".
+ * While the Roman Empire used gold coins as their preffered form of sound money, we are basically mocking their better currency (the guilder) by printing their pure words on our dirty fiat.
  * 1 UNUM is hard-coded to always be exactly equal to $1.00 United States Dollar in the contract. If you mint 1.0115 UNUM with your 1.0115 USDT, but later Tether drops to a value of 0.99 USD, tough luck, you would still need 1 UNUM to withdraw your 0.99 USD value of Tether.
+ * The source of real-time prices will come from Chainlink Price Feeds, a decentralized network of oracles that bridge real world data to blockchains.
  * UNUM does not care about it's price on other markets. It only cares about its immutable value declared in the Solidity contract. If you don't like the contract, don't sign (a tx with) it!
  * Those of us around long enough have seen stablecoins come and go over the years, each one with its own unique set of pros and cons.
- * Instead of placing all your eggs in one stablish-basket, spread your risk across a basket of stablecoins, one that can always be reedemed for it's current and the collateral you deposited.
- */
+ * Instead of placing all your eggs in one stablish-basket, diversify your risk across a several different baskets of stablecoins, ones which can always be reedemed for the current marketvalue in proportion to the collateral you deposited.
+
+   “Diversification is protection against ignorance, but if you don’t feel ignorant, the need for it goes down drastically.”
+    - Warren Buffett
+   "Probably rat poison squared."
+    - Also, Warren Buffett  
 
 ## Pluribus is Bootstrapped from the [Chainlink Hardhat Starter Kit](https://github.com/smartcontractkit/hardhat-starter-kit)
 
