@@ -3,24 +3,27 @@
 
 <i>Out of many, one coin to outlast them all</i>
 
-## WTF is Pluribus (UNUM)?
+## What is Pluribus (UNUM)?
  Short answer, nothing yet. Somewhere between ideation and a POC. 
  * Pluribus (UNUM) intends to be an erc20-compatible stablecoin, collateralized by a basket of several other well-known stablecoins. You could call it a "meta-stablecoin."
- * While a single stablecoin may completely fail for any number of reasons, the combination of several well-chosen, popular, liquid, and time-tested stablecoins combined into a single pool of collateral should be more resilient to any single failure.
+ * Those of us who've been around long enough have seen stablecoins come and go over the years, each one with its own unique set of pros and cons.
+ * While a single stablecoin may completely fail for any number of reasons, the combination of several well-chosen, popular, liquid, and time-tested stablecoins combined into a single pool of collateral could be more resilient than to any failure that a more traditional, one-off stablecoin could face.
  * "E pluribus unum" is a Latin phrase meaning, "out of many, one," and can be found printed on every single U.S. dollar bill and coin. Here, the "many" are the stablecoins held as collateral in this contract; UNUM the "one".
  * While the Roman Empire used gold coins as their preffered form of sound money, we are basically mocking their better currency (the guilder) by printing their pure words on our dirty fiat.
- * 1 UNUM is hard-coded to always be exactly equal to $1.00 United States Dollar in the contract. If you mint 1.0115 UNUM with your 1.0115 USDT, but later Tether drops to a value of 0.99 USD, tough luck, you would still need 1 UNUM to withdraw your 0.99 USD value of Tether.
+ * 1 UNUM is hard-coded to always be exactly equal to $1.00 United States Dollar in the contract. If you mint 1.0115 UNUM with your 1.0115 USDT, but later Tether drops to a value of 0.99 USD, tough luck, you would still need 1.0115 UNUM to withdraw your 0.99 USD value of Tether.
  * The source of real-time prices will come from Chainlink Price Feeds, a decentralized network of oracles that bridge real world data to blockchains.
  * UNUM does not care about it's price on other markets. It only cares about its immutable value declared in the Solidity contract. If you don't like the contract, don't sign (a tx with) it!
- * Those of us around long enough have seen stablecoins come and go over the years, each one with its own unique set of pros and cons.
  * Instead of placing all your eggs in one stablish-basket, diversify your risk across a several different baskets of stablecoins, ones which can always be reedemed for the current marketvalue in proportion to the collateral you deposited.
 
    “Diversification is protection against ignorance, but if you don’t feel ignorant, the need for it goes down drastically.”
     - Warren Buffett
    "Probably rat poison squared."
-    - Also, Warren Buffett  
+    - Also, Warren Buffett
+  
+## TODO:
+This project intends to act as a non-profit, but in order to pay the oracle fees, Pluribus will earn need to consistently earn revenue to keep a stable treasury balance of LINK tokens (Chainlink's fee token). Secondly, Pluribus would ideally want to be able to build up a sizeable bailout fund over time if UNUM starts to gain adoption. This bailout (SAFU) fund is to only be used in worst case scenerarios when it becomes is more than clear that a formally supported collateralized stable coin has failed and is going to near zero, forever. So, as mentioned above, if your collateralized coin is worth a little less than $1.00 and you withdraw, you will get exactly back the current market value of your original collateral. And on the flip side, if your stablecoin collateral happens to have a market value greater than 1 USD in value, you will only be able withdraw your collateral at a 1:1 exchange rate with UNUM. Hopefully this small inconvience -- taking a ~0.5% haircut the few times you decide to withdraw your collateral when you happen to be either a little up or a little down, will make up for it in SPADES when the worst happens, your collateral completely loses all its value and Pluribus steps in with the goal of making every depositer of that collateral completely whole again. Ideally as the bailout fund grows overtime, it will eventually hold more in value than any single coin does in collateral.
 
-## Pluribus is Bootstrapped from the [Chainlink Hardhat Starter Kit](https://github.com/smartcontractkit/hardhat-starter-kit)
+<b>If anyone who reads this wants to get in contact, either to contribute or just talk tokenomics, feel free to message me or open an issue on this repo. Thanks!</b>
 
 
 - [Chainlink Hardhat Starter Kit](#chainlink-hardhat-starter-kit)
