@@ -1,14 +1,12 @@
 ## DRAFT v0.2.0
 # Pluribus (UNUM) - An Ethereum stablecoin collateralized by other Ethereum stablecoins
-(TLDR: As adoption grows, the Pluribus tokenomic model will push UNUM to eventually be significantly over-collaterized to compensate for the almost-certain case that one or more of its collateral de-pegs to the point of failure)
-
-<i>Out of many, one coin to outlast them all</i>
+TLDR: As adoption grows, the Pluribus tokenomic model will push UNUM to eventually be significantly over-collaterized to compensate for the almost-certain case that one or more of its collateral de-pegs to the point of failure.
 
 ## What is Pluribus (UNUM)?
- Short answer, nothing yet. Somewhere between ideation and a POC. 
+ Short answer, nothing yet. Somewhere between ideation and an experimental POC. 
  * Pluribus (UNUM) intends to be an erc20-compatible USD stablecoin, collateralized by a basket of several other well-known USD stablecoins. You could call it a "meta-stablecoin."
  * Many of us who've been around long enough have seen stablecoins come and go, each one with its own unique set of pros and cons.
- * While a single stablecoin may fail for any number of reasons, several well-chosen, popular, liquid, and time-tested stablecoins combined into a single pool of collateral represented by a single coin (UNUM) could be more resilient than a more traditional, one-off stablecoin (fiat-backed, real-world asset backed, non-stablecoin crypto-collaterized, algorithmic, etc.).
+ * While a single stablecoin may fail for any number of reasons, several well-chosen, popular, liquid, and time-tested stablecoins combined into a single pool of collateral represented by a single coin (UNUM) could be more resilient than a more traditional, one-off stablecoin (fiat-backed, real-world asset backed, non-stablecoin-crypto-collaterized, algorithmic, etc.).
  * 1 UNUM is hard-coded to always be equal to 1.000000000000000000 United States Dollar in the contract. If you mint 1.0115 UNUM with your 1.0115 USDT at a USD value of also $1.0115, but later Tether drops to a value of 0.99 USD, you would still need 1.0115 UNUM to completely withdraw your 0.99 USD value of Tether from Pluribus' collateral. The very good reasons for this small "cut" will be explained further down.
  * UNUM is unconcerned about its price on other markets. It only cares about its immutable value declared in the Solidity contract. As a lawyer might say, "if you don't like the contract, then don't sign [a tx with] it!"
  * The source of real-time stablecoin prices will come from Chainlink Price Feeds, a decentralized network of oracles that bridge real world data to blockchains.
