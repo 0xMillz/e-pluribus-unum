@@ -16,12 +16,12 @@ TLDR: As adoption grows, the Pluribus tokenomic model will push UNUM to eventual
 ## TODO:
 This project intends to act as a non-profit, but in order to pay the oracle fees, Pluribus will need to consistently earn revenue to keep a stable treasury balance of LINK tokens (Chainlink's fee token). Secondly, Pluribus would ideally want to be able to build up a sizeable bailout fund if UNUM starts to gain adoption. This bailout (SAFU) fund is to only be used in worst case scenarios when it becomes clear that a formally supported collateralized stable coin has failed and is going to near zero, forever. So, as mentioned above, if your collateralized coin is worth a little less than $1.00 and you withdraw, you will get exactly back the current market value of your collateral. And on the flip side, if your stablecoin collateral happens to have a market value greater than 1 USD in value, you will only be able withdraw your collateral at a 1:1 exchange rate with UNUM. Hopefully this small inconvenience -- taking a ~0.5% haircut the few times you decide to withdraw your collateral when you happen to be either a little up or a little down, will make up for it in SPADES when inevitably the worst happens: one of Pluribus' collateralized stablecoin completely loses its peg. This is when Pluribus steps in with the goal of making every depositer of that collateral whole again. Ideally as the bailout fund grows in proportion to user adoption, it will eventually hold more in value than any single coin does in its own collateral pool.
 
-<b>If anyone who reads this wants to get in contact, either to contribute or just talk tokenomics, feel free to message me or open an issue on this repo. Thanks!</b>
-
 ## Why the name Pluribus (UNUM)?
  * <i>E pluribus unum</i> is a Latin phrase essentially meaning, "out of many, one," and can be found printed on every single U.S. dollar bill and coin. In the case of this smart contract, the "many" are the stablecoins held as collateral in this contract; UNUM the "one".
  * While the Roman Empire used gold coins as their preffered form of sound money (their gold coinage (<i>aureus</i>/guilder) was never debased unlike their silver counterparts), we are basically mocking their better, despite ancient, currency by printing their own words in their own tongue on our own modern "dirty fiat."
- * I also like to think of the many-to-one metaphor as how UNUM could be considered greater than the sum of its all parts
+ * I also like to think of the many-to-one metaphor as how UNUM could be considered as having greater value than the sum of all its parts (the collateral).
+
+<b>If anyone who reads this wants to get in contact, either to contribute or just talk tokenomics, feel free to message me or open an issue on this repo. Thanks!</b>
 
 ## Generic Starter Kit README:
 - [Chainlink Hardhat Starter Kit](#chainlink-hardhat-starter-kit)
