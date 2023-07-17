@@ -23,7 +23,7 @@ This project intends to act as a non-profit, but in order to pay the oracle fees
 
 <b>If anyone who reads this wants to get in contact, either to contribute or just talk tokenomics, feel free to message me or open an issue on this repo. Thanks!</b>
 
-## Generic Starter Kit README:
+# Generic Chainlink Hardhat Starter Kit README:
 - [Chainlink Hardhat Starter Kit](#chainlink-hardhat-starter-kit)
 - [Getting Started](#getting-started)
   - [Requirements](#requirements)
