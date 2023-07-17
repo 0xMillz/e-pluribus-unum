@@ -5,7 +5,7 @@
 
 ## What is Pluribus (UNUM)?
  Short answer, nothing yet. Somewhere between ideation and a POC. 
- * Pluribus (UNUM) intends to be an erc20-compatible stablecoin, collateralized by a basket of several other well-known stablecoins. You could call it a "meta-stablecoin."
+ * Pluribus (UNUM) intends to be an erc20-compatible USD stablecoin, collateralized by a basket of several other well-known USD stablecoins. You could call it a "meta-stablecoin."
  * Many of us who've been around long enough have seen stablecoins come and go, each one with its own unique set of pros and cons.
  * While a single stablecoin may fail for any number of reasons, several well-chosen, popular, liquid, and time-tested stablecoins combined into a single pool of collateral represented by a single coin (UNUM) could be more resilient than a more traditional, one-off stablecoin.
  * "E pluribus unum" is a Latin phrase meaning, "out of many, one," and can be found printed on every single U.S. dollar bill and coin. Here, the "many" are the stablecoins held as collateral in this contract; UNUM the "one".
